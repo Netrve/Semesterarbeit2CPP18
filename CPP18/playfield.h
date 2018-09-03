@@ -25,6 +25,10 @@ private:
   void subtractLife();
   void gameOver();
   void restartGame();
+  void drawPlayer(QPainter *painterIn);
+  void drawScore(QPainter *painterIn);
+  void drawLifes(QPainter *painterIn);
+  void drawPauseGameOver(QPainter *painterIn);
 
 protected:
   void gameTick();

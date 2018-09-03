@@ -16,83 +16,71 @@ playfield::~playfield() { delete painter; }
 void playfield::paintEvent(QPaintEvent *event) {
   if (event) {
     painter->begin(this);
-
     if (gameActive) {
-      // Draw Player
-      painter->setBrush(Qt::BDiagPattern);
-      painter->drawRect(playerX, 440, 40, 40);
-
       // Set Font
       QFont gameFont("Arial", 24, QFont::Bold, false);
       painter->setFont(gameFont);
 
-      // Draw Score
-      painter->setPen(QPen(Qt::black, 2));
-      painter->drawText(QPointF(10, 34), QString::number(points / 10));
-
-      // Draw Lifes
-      painter->setPen(QPen(Qt::darkGreen, 2));
-      painter->drawText(QPointF(712, 34), "❤ ❤ ❤");
-
-      painter->setPen(QPen(Qt::red, 2));
-      switch (lifes) {
-      case 2:
-        painter->drawText(QPointF(712, 34), "❤");
-        break;
-      case 1:
-        painter->drawText(QPointF(712, 34), "❤ ❤");
-        break;
-      case 0:
-        painter->drawText(QPointF(712, 34), "❤ ❤ ❤");
-        break;
-      }
+      // Draw Elements
+      drawPlayer(painter);
+      drawScore(painter);
+      drawLifes(painter);
     } else {
-      // Draw Player
-      painter->setBrush(Qt::BDiagPattern);
-      painter->drawRect(playerX, 440, 40, 40);
-
       // Set Font
       QFont gameFont("Arial", 24, QFont::Bold, false);
       painter->setFont(gameFont);
 
-      // Draw Score
-      painter->setPen(QPen(Qt::black, 2));
-      painter->drawText(QPointF(10, 34), QString::number(points / 10));
-
-      // Draw Lifes
-      painter->setPen(QPen(Qt::darkGreen, 2));
-      painter->drawText(QPointF(712, 34), "❤ ❤ ❤");
-
-      painter->setPen(QPen(Qt::red, 2));
-      switch (lifes) {
-      case 2:
-        painter->drawText(QPointF(712, 34), "❤");
-        break;
-      case 1:
-        painter->drawText(QPointF(712, 34), "❤ ❤");
-        break;
-      case 0:
-        painter->drawText(QPointF(712, 34), "❤ ❤ ❤");
-        break;
-      }
-
-      // Draw Game Over or Pause
-      if (gameDeath) {
-        painter->setPen(QPen(Qt::darkRed, 2));
-        painter->drawText(QRectF(0, 0, 840, 440), Qt::AlignCenter, "GAME OVER");
-
-        // Set Font
-        QFont gameFont("Arial", 16, QFont::Bold, false);
-        painter->setFont(gameFont);
-        painter->drawText(QRectF(0, 0, 840, 500), Qt::AlignCenter,
-                          "Click to Restart");
-      } else {
-        painter->setPen(QPen(Qt::black, 2));
-        painter->drawText(QRectF(0, 0, 840, 500), Qt::AlignCenter, "PAUSED");
-      }
+      // Draw Elements
+      drawPlayer(painter);
+      drawScore(painter);
+      drawLifes(painter);
+      drawPauseGameOver(painter);
     }
-
     painter->end();
+  }
+}
+
+void playfield::drawPlayer(QPainter *painterIn) {
+  painterIn->setBrush(Qt::BDiagPattern);
+  painterIn->drawRect(playerX, 440, 40, 40);
+}
+
+void playfield::drawScore(QPainter *painterIn) {
+  painterIn->setPen(QPen(Qt::black, 2));
+  painterIn->drawText(QPointF(10, 34), QString::number(points / 10));
+}
+
+void playfield::drawLifes(QPainter *painterIn) {
+  painterIn->setPen(QPen(Qt::darkGreen, 2));
+  painterIn->drawText(QPointF(712, 34), "❤ ❤ ❤");
+
+  painterIn->setPen(QPen(Qt::red, 2));
+  switch (lifes) {
+  case 2:
+    painterIn->drawText(QPointF(712, 34), "❤");
+    break;
+  case 1:
+    painterIn->drawText(QPointF(712, 34), "❤ ❤");
+    break;
+  case 0:
+    painterIn->drawText(QPointF(712, 34), "❤ ❤ ❤");
+    break;
+  }
+}
+
+void playfield::drawPauseGameOver(QPainter *painterIn) {
+  if (gameDeath) {
+    painterIn->setPen(QPen(Qt::darkRed, 2));
+    painterIn->drawText(QRectF(0, 0, 840, 440), Qt::AlignCenter, "GAME OVER");
+
+    // Set Font
+    QFont gameFont("Arial", 16, QFont::Bold, false);
+    painterIn->setFont(gameFont);
+    painterIn->drawText(QRectF(0, 0, 840, 500), Qt::AlignCenter,
+                        "Click to Restart");
+  } else {
+    painterIn->setPen(QPen(Qt::black, 2));
+    painterIn->drawText(QRectF(0, 0, 840, 500), Qt::AlignCenter, "PAUSED");
   }
 }
 
