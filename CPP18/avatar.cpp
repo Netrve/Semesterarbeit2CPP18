@@ -3,6 +3,20 @@
 avatar::avatar(QWidget *parent) : QWidget(parent) {
   setStyleSheet("border: 1px solid black; background-color: #fffffa");
   setAutoFillBackground(true);
+  std::thread(&avatar::gameTick, this).detach();
+}
+
+void avatar::gameTick() {
+  for (;;) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    gameProcess();
+  }
+}
+
+void avatar::gameProcess() {
+  if (gameActive) {
+    update();
+  }
 }
 
 void avatar::paintEvent(QPaintEvent *) {
@@ -20,7 +34,11 @@ void avatar::paintEvent(QPaintEvent *) {
 
 void avatar::gameSwitch(bool state) { gameActive = state; }
 
-void avatar::mousePressEvent(QMouseEvent *event) { setFocus(); }
+void avatar::mousePressEvent(QMouseEvent *event) {
+  if (event) {
+    setFocus();
+  }
+}
 
 void avatar::keyPressEvent(QKeyEvent *event) {
   if (gameActive) {

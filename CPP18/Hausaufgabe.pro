@@ -26,10 +26,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         window.cpp \
-    avatar.cpp
+    avatar.cpp \
+    entity.cpp \
+    entity.cpp \
+    playfield.cpp
 
 HEADERS += \
         window.h \
-    avatar.h
+    avatar.h \
+    entity.h \
+    entity.h \
+    playfield.h
 
 FORMS +=

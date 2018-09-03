@@ -1,9 +1,10 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include "avatar.h"
-#include <QCloseEvent>
-#include <QFileDialog>
+//#include "avatar.h"
+//#include "entity.h"
+#include "playfield.h"
+// #include <QFileDialog>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QMessageBox>
@@ -17,19 +18,15 @@ public:
   Window(QWidget *parent = 0);
 
 private:
-  bool gameState = false;
-  enum { NumGridRows = 2, NumButtons = 3 };
-
-  avatar *myAvatar;
-  QPushButton *buttons[NumButtons];
+  int NumButtons = 3;
+  playfield *myPlayfield;
+  QPushButton *buttons[4];
   QGroupBox *horizontalGroupBox;
-
   void createHorizontalGroupBox(QGridLayout *gridLayout);
-  void openDialog(void);
 
 private slots:
-  void saveFile(void);
-  void loadFile(void);
+  // void saveFile(void);
+  // void loadFile(void);
   void startStop(void);
 };
 

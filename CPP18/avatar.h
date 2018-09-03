@@ -4,6 +4,8 @@
 #include <QMessageBox>
 #include <QWidget>
 #include <QtGui>
+#include <chrono>
+#include <thread>
 
 class avatar : public QWidget {
 public:
@@ -11,6 +13,8 @@ public:
   void serialize(QFile &file);
   void deserialize(QFile &file);
   void gameSwitch(bool state);
+  void gameTick();
+  void gameProcess();
 
 private:
   int posX = 410;

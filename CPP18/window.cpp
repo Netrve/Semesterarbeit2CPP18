@@ -2,12 +2,12 @@
 
 Window::Window(QWidget *parent) : QWidget(parent) {
   QGridLayout *gridLayout = new QGridLayout;
-  createHorizontalGroupBox(gridLayout);
-  myAvatar = new avatar;
-  myAvatar->setFixedHeight(500);
-  gridLayout->addWidget(myAvatar, 1, 0);
+
+  myPlayfield = new playfield(this);
+  gridLayout->addWidget(myPlayfield, 1, 0);
   setLayout(gridLayout);
-  myAvatar->setFocus();
+
+  createHorizontalGroupBox(gridLayout);
 }
 
 void Window::createHorizontalGroupBox(QGridLayout *gridLayout) {
@@ -25,10 +25,12 @@ void Window::createHorizontalGroupBox(QGridLayout *gridLayout) {
   for (int i = 0; i < NumButtons; ++i) {
     layout->addWidget(buttons[i]);
   }
+
   horizontalGroupBox->setLayout(layout);
   gridLayout->addWidget(horizontalGroupBox, 0, 0);
 }
 
+/*
 void Window::saveFile(void) {
   QFileDialog dialog(this);
   QString fileName;
@@ -74,15 +76,12 @@ void Window::loadFile(void) {
     return;
   }
 }
+*/
 
 void Window::startStop(void) {
-  if (!gameState) {
+  if (myPlayfield->gameSwitch()) {
     buttons[0]->setText("Stop");
-    gameState = true;
-    myAvatar->gameSwitch(gameState);
   } else {
     buttons[0]->setText("Start");
-    gameState = false;
-    myAvatar->gameSwitch(gameState);
   }
 }
